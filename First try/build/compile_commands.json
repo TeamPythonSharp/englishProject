@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/big_mak/Documents/English_pj/englishProject/First try/build",
+  "command": "/usr/bin/gcc  -I\"/home/big_mak/Documents/English_pj/englishProject/First try/solution/include\" -g -o CMakeFiles/deduplicator.dir/solution/src/main.c.o -c \"/home/big_mak/Documents/English_pj/englishProject/First try/solution/src/main.c\"",
+  "file": "/home/big_mak/Documents/English_pj/englishProject/First try/solution/src/main.c"
+}
+]
