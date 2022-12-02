@@ -10,6 +10,12 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <stdio.h>
+#include <time.h>       // for clock_t, clock(), CLOCKS_PER_SEC
+#include <unistd.h>     // for sleep()
+ 
+
+
 typedef unsigned char uchar;
 typedef unsigned long ulong;
 typedef unsigned int  uint;
@@ -276,20 +282,20 @@ long file_size ( char *name )
 */
 void print_ratios( char *input, char *output )
 {
-   long input_size;
-   long output_size;
-   int ratio;
+   float input_size;
+   float output_size;
+   float ratio;
 
    input_size = file_size( input );
    if ( input_size == 0 )
       input_size = 1;
    output_size = file_size( output );
-   ratio = 100 - (int) ( output_size * 100L / input_size );
-   printf( "\nInput size:        %ld bytes\n", input_size );
-   printf( "Output size:       %ld bytes\n", output_size );
+   ratio =   ( input_size/output_size );
+   printf( "\nInput size:        %.0f bytes\n", input_size );
+   printf( "Output size:       %.0f bytes\n", output_size );
    if ( output_size == 0 )
       output_size = 1;
-   printf( "Ratio: %d%%\n", ratio );
+   printf( "Ratio: %.2f \n", ratio );
 }
 
 /*-----------------------------------------------------------
@@ -450,13 +456,17 @@ uint decode_string ( uint count, uint code )
    return count;
 }
 
+    
 
 //------------------------------------------------------------
 // Главная процедура
 int main(int argc, char* argv[])
 {
- setbuf( stdout, NULL );
-
+   setbuf( stdout, NULL );
+   double time_spent = 0.0;
+ 
+    clock_t begin = clock();
+ 
  // в случае неправильного количества аргументов
  // выводится способ использования программы
  if (argc < 4)
@@ -518,6 +528,13 @@ int main(int argc, char* argv[])
 
   printf( "\nDecompression complete." );
  };
+ clock_t end = clock();
+ 
+    // рассчитать прошедшее время, найдя разницу (end - begin) и
+    // деление разницы на CLOCKS_PER_SEC для перевода в секунды
+    time_spent += (double)(end - begin) / CLOCKS_PER_SEC;
+ 
+    printf("The elapsed time is %f seconds", time_spent);
 
    return 0;
 
